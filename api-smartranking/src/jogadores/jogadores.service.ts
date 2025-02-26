@@ -10,8 +10,15 @@ export class JogadoresService {
 
     private readonly logger = new Logger(JogadoresService.name);
 
-    async criarAtualizarJogador(criarJogadorDto: CriarJogadorDto): Promise<void> {        
-        
+    async criarAtualizarJogador(criarJogadorDto: CriarJogadorDto): Promise<void> {                
+        this.criar(criarJogadorDto);
+    }
+
+    async consultarTodosJogadores(): Promise<Jogador[]> {
+        return this.jogadores
+    }
+
+    private criar(criarJogadorDto: CriarJogadorDto): void{
         const {email, nome, telefoneCelular} = criarJogadorDto;
         
         const jogador: Jogador = {
