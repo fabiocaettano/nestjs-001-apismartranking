@@ -37,6 +37,17 @@ export class JogadoresService {
 
         return jogadorEncontrado;
     }
+    async consultarJogadorPeloId(_id: string): Promise<Jogador> {
+        this.logger.log(`_id: ${_id}`);
+
+        const jogadorEncontrado = this.jogadores.find(jogador => jogador._id === _id);
+        
+        if(!jogadorEncontrado){
+            throw new NotFoundException(`Jogador com id ${_id} não encontrado`);
+        }
+
+        return jogadorEncontrado;
+    }
 
     async deletarJogador(email: string): Promise<void> {
         const jogadorEncontrado = this.jogadores.find(jogador => jogador.email === email);
