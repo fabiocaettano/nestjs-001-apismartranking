@@ -37,6 +37,7 @@ export class JogadoresService {
 
         return jogadorEncontrado;
     }
+    
     async consultarJogadorPeloId(_id: string): Promise<Jogador> {
         this.logger.log(`_id: ${_id}`);
 
@@ -50,6 +51,7 @@ export class JogadoresService {
     }
 
     async deletarJogador(email: string): Promise<void> {
+
         const jogadorEncontrado = this.jogadores.find(jogador => jogador.email === email);
 
         if(!jogadorEncontrado){
