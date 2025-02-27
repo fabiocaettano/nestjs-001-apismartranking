@@ -28,4 +28,15 @@ export class CategoriasService {
     async consultarTodasCategorias(): Promise<Categoria[]> {
         return await this.categoriaModel.find().exec();
     }
+
+    async consultarCategoria(categoria: string): Promise<Categoria> {
+
+        const categoriaEncontrada = await this.categoriaModel.findOne({ categoria }).exec();
+
+        if (!categoriaEncontrada) {
+            throw new NotFoundException(`Categoria ${categoria} não encontrada`);
+        }
+
+        return categoriaEncontrada;
+    }
 }
