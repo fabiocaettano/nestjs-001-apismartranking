@@ -19,10 +19,12 @@ export class CategoriasController {
         return await this.categoriasService.consultarTodasCategorias();
     }
 
-    @Get('/:categoria')
+    @Get('/:categoria/categoria')
     async consultarCategoria(@Param('categoria') categoria: string) {
         
         this.logger.log(`categoria: ${categoria}`);
         return await this.categoriasService.consultarCategoria(categoria);
     }
+
+    
 }
