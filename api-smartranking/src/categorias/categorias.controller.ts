@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CategoriasService } from './categorias.service';
 import { CriarCategoriaDto } from './dtos/criar-categoria.dto';
 
@@ -10,5 +10,10 @@ export class CategoriasController {
     @UsePipes(ValidationPipe)
     async criarCategoria(@Body() criarCategoriaDto: CriarCategoriaDto) {
         return this.categoriasService.criarCategoria(criarCategoriaDto);
+    }
+
+    @Get()
+    async consultarTodasCategorias() {
+        return await this.categoriasService.consultarTodasCategorias();
     }
 }
