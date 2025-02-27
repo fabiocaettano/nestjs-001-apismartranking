@@ -7,9 +7,7 @@ import { AtualizarJogadorDto } from './dto/atualizarr-jogador.dto';
 
 @Injectable()
 export class JogadoresService {
-
-    private jogadores: Jogador[] = [];
-
+    
     constructor(@InjectModel('Jogador') private readonly jogadorModel: Model<Jogador>){}
 
     private readonly logger = new Logger(JogadoresService.name);

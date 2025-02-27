@@ -13,6 +13,7 @@ export class JogadoresValidacaoParametrosPipe implements PipeTransform {
     if(!value){
       throw new BadRequestException(`O valor do parâmetro ${metadata.data}  não foi informado`);
     }
+    
     return value;
   }
 }
