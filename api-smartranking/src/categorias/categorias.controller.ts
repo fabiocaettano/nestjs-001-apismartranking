@@ -20,11 +20,14 @@ export class CategoriasController {
     }
 
     @Get('/:categoria/categoria')
-    async consultarCategoria(@Param('categoria') categoria: string) {
-        
-        this.logger.log(`categoria: ${categoria}`);
-        return await this.categoriasService.consultarCategoria(categoria);
+    async consultarCategoriaPelaDescricao(@Param('categoria') categoria: string) {        
+        this.logger.log(`consultarCategoriaPelaDescricao | categoria: ${categoria}`);
+        return await this.categoriasService.consultarCategoriaPelaDescricao(categoria);
     }
 
-    
+    @Get('/:_id/id')
+    async consultarCategoriaPeloId(@Param('_id') _id: string) {        
+        this.logger.log(`consultarCategoriaPeloID | _id: ${_id}`);
+        return await this.categoriasService.consultarCategoriaPeloId(_id);
+    }
 }
