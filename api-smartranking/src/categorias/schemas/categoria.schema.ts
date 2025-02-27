@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { EventoSchema } from 'src/eventos/evento.schema';
+import { EventoSchema } from 'src/eventos/schemas/evento.schema';
 
 
 export const CategoriaSchema = new Schema({

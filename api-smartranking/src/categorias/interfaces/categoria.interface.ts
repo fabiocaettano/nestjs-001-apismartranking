@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { Evento } from "src/eventos/evento.interface";
+import { Evento } from "src/eventos/interfaces/evento.interface";
 import { Jogador } from "src/jogadores/interfaces/jogador.interface";
 
 export interface Categoria extends Document {
