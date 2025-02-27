@@ -7,4 +7,4 @@ export const CategoriaSchema = new Schema({
     descricao: { type: String, required: true },
     eventos: { type: [EventoSchema], required: true },
     jogadores: [{ type: Schema.Types.ObjectId, ref: 'Jogador' }]
-}, { timestamps: true });
+}, { timestamps: true, collection: 'categorias' });
