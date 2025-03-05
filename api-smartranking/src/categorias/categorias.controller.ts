@@ -21,11 +21,12 @@ export class CategoriasController {
     @Post('/:categoria/jogadores/:_idJogador')
     async atribuirCategoriaJogador(
         @Param('categoria') categoria: string,
-        @Param('_idJogador') _idJogador: string
-    ) {
+        @Param('_idJogador') _idJogador: string,
+        @Param() params: string[]
+    ):Promise<void> {
         this.logger.log(`atribuirCategoriaJogador | categoria: ${categoria} | _idJogador: ${_idJogador}`);
-        return await this.categoriasService.atribuirCategoriaJogador(categoria, _idJogador);
-    }
+        this.logger.log(`\nparams: ${params}`);
+        return await this.categoriasService.atribuirCategoriaJogador(params); }
 
     @Post()
     @UsePipes(ValidationPipe)

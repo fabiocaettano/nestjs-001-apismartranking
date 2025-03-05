@@ -22,12 +22,15 @@ export class CategoriasService {
         await this.categoriaModel.findOneAndUpdate({ categoria }, { $set: atualizarCategoriaDto }).exec();
     }
 
-    async atribuirCategoriaJogador(categoria: string, _idJogador: any): Promise<void> { 
+    async atribuirCategoriaJogador(params: string[]): Promise<void> {
+        const categoria = params['categoria'];
+        const _idJogador = params['_idJogador'];
+
         const categoriaEncontrada = await this.categoriaModel.findOne({ categoria }).exec();
-        
+
         if (!categoriaEncontrada) {
             throw new NotFoundException(`Categoria ${categoria} não encontrada`);
-        }
+        }         
 
         const jogadorJaCadastradoCategoria = await this.categoriaModel
             .find({ categoria })
@@ -42,8 +45,6 @@ export class CategoriasService {
         categoriaEncontrada.jogadores.push(_idJogador);
 
         await this.categoriaModel.findOneAndUpdate({ categoria }, { $set: categoriaEncontrada }).exec();
-
-
     }
 
     async criarCategoria(criarCategoriaDto: CriarCategoriaDto): Promise<Categoria> {        
@@ -62,7 +63,7 @@ export class CategoriasService {
     }
 
     async consultarTodasCategorias(): Promise<Categoria[]> {
-        return await this.categoriaModel.find().exec();
+        return await this.categoriaModel.find().populate("jogadores").exec();
     }
 
     async consultarCategoriaPelaDescricao(categoria: string): Promise<Categoria> {
