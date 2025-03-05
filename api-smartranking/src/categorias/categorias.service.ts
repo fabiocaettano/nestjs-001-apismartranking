@@ -4,11 +4,13 @@ import { Categoria } from './interfaces/categoria.interface';
 import { CriarCategoriaDto } from './dtos/criar-categoria.dto';
 import { Model } from 'mongoose';
 import { AtualizarCategoriaDto } from './dtos/atualizar-categoria.dto';
+import { JogadoresService } from 'src/jogadores/jogadores.service';
 
 @Injectable()
 export class CategoriasService {
     constructor(
-        @InjectModel('Categoria') private readonly categoriaModel: Model<Categoria>
+        @InjectModel('Categoria') private readonly categoriaModel: Model<Categoria>,
+        private readonly jogadoresService: JogadoresService
     ) {}
 
     async atualizarCategoria(categoria: string, atualizarCategoriaDto: AtualizarCategoriaDto): Promise<void> {
@@ -25,6 +27,8 @@ export class CategoriasService {
     async atribuirCategoriaJogador(params: string[]): Promise<void> {
         const categoria = params['categoria'];
         const _idJogador = params['_idJogador'];
+
+        await this.jogadoresService.consultarJogadorPeloId(_idJogador);
 
         const categoriaEncontrada = await this.categoriaModel.findOne({ categoria }).exec();
 
