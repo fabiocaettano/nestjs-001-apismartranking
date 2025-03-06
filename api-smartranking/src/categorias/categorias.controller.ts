@@ -1,4 +1,4 @@
-import { Param ,Body, Controller, Get, Post, UsePipes, ValidationPipe, Logger, Put } from '@nestjs/common';
+import { Param ,Body, Controller, Get, Post, UsePipes, ValidationPipe, Logger, Put, NotFoundException } from '@nestjs/common';
 import { CategoriasService } from './categorias.service';
 import { CriarCategoriaDto } from './dtos/criar-categoria.dto';
 
@@ -8,13 +8,20 @@ export class CategoriasController {
 
     logger = new Logger(CategoriasController.name);
 
-    @Put('/:categoria/categoria')
+    @Put('/:categoria')
     @UsePipes(ValidationPipe)
     async atualizarCategoria(
         @Body() atualizarCategoriaDto: CriarCategoriaDto,
         @Param('categoria') categoria: string
     ) {
         this.logger.log(`atualizarCategoria | categoria: ${categoria}`);
+        
+        const categoriaEncontrada = await this.categoriasService.consultarCategoriaPelaDescricao(categoria);
+
+        if (!categoriaEncontrada) {
+            throw new NotFoundException(`Categoria ${categoria} não encontrada`);
+        }   
+
         return await this.categoriasService.atualizarCategoria(categoria, atualizarCategoriaDto);
     }
 
