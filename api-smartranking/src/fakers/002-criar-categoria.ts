@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker';
 import { Document, Schema } from 'mongoose';
 import mongoose from 'mongoose';
 import { ConnectionString } from './connection-string';
