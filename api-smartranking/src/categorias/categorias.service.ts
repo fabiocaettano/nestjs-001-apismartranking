@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Categoria } from './interfaces/categoria.interface';
 import { CriarCategoriaDto } from './dtos/criar-categoria.dto';
@@ -6,12 +6,15 @@ import { Model } from 'mongoose';
 import { AtualizarCategoriaDto } from './dtos/atualizar-categoria.dto';
 import { JogadoresService } from 'src/jogadores/jogadores.service';
 
+
 @Injectable()
 export class CategoriasService {
     constructor(
         @InjectModel('Categoria') private readonly categoriaModel: Model<Categoria>,
         private readonly jogadoresService: JogadoresService
     ) {}
+
+    private readonly logger = new Logger(CategoriasService.name);
 
     async atualizarCategoria(categoria: string, atualizarCategoriaDto: AtualizarCategoriaDto): Promise<void> {
 
@@ -24,12 +27,15 @@ export class CategoriasService {
         await this.categoriaModel.findOneAndUpdate({ categoria }, { $set: atualizarCategoriaDto }).exec();
     }
 
-    async atribuirCategoriaJogador(params: string[]): Promise<void> {
-        const categoria = params['categoria'];
-        const _idJogador = params['_idJogador'];
+    async atribuirCategoriaJogador(params): Promise<void> {
+        
+        this.logger.log(`atribuirCategoriaJogador | params: ${params.categoria} | ${params._idJogador}`);   
+        
+        const categoria = params.categoria;
+        const _idJogador = params._idJogador;
 
         await this.jogadoresService.consultarJogadorPeloId(_idJogador);
-
+        
         const categoriaEncontrada = await this.categoriaModel.findOne({ categoria }).exec();
 
         if (!categoriaEncontrada) {
@@ -44,11 +50,14 @@ export class CategoriasService {
 
         if (jogadorJaCadastradoCategoria.length > 0) {
             throw new NotFoundException(`Jogador ${_idJogador} já cadastrado na categoria ${categoria}`);
-        }
+        }        
 
         categoriaEncontrada.jogadores.push(_idJogador);
 
+        this.logger.log(`categoriaEncontrada: ${categoriaEncontrada}`);
+
         await this.categoriaModel.findOneAndUpdate({ categoria }, { $set: categoriaEncontrada }).exec();
+        
     }
 
     async criarCategoria(criarCategoriaDto: CriarCategoriaDto): Promise<Categoria> {        

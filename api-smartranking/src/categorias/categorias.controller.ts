@@ -26,14 +26,11 @@ export class CategoriasController {
     }
 
     @Post('/:categoria/jogadores/:_idJogador')
-    async atribuirCategoriaJogador(
-        @Param('categoria') categoria: string,
-        @Param('_idJogador') _idJogador: string,
-        @Param() params: string[]
-    ):Promise<void> {
-        this.logger.log(`atribuirCategoriaJogador | categoria: ${categoria} | _idJogador: ${_idJogador}`);
-        this.logger.log(`\nparams: ${params}`);
-        return await this.categoriasService.atribuirCategoriaJogador(params); }
+    async atribuirCategoriaJogador(        
+        @Param() params: {categoria: string, _idJogador: string}
+    ):Promise<void> {        
+        return await this.categoriasService.atribuirCategoriaJogador(params)
+    }
 
     @Post()
     @UsePipes(ValidationPipe)
