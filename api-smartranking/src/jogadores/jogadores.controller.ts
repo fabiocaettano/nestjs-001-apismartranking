@@ -4,7 +4,6 @@ import { JogadoresService } from './jogadores.service';
 import { Jogador } from './interfaces/jogador.interface';
 import { ValidacaoParametrosPipe } from '../common/pipes/validacao-parametros.pipe';
 import { AtualizarJogadorDto } from './dto/atualizarr-jogador.dto';
-import { query } from 'express';
 
 @Controller('api/v1/jogadores')
 export class JogadoresController {

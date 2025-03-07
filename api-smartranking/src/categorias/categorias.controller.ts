@@ -14,8 +14,7 @@ export class CategoriasController {
         @Body() atualizarCategoriaDto: CriarCategoriaDto,
         @Param('categoria') categoria: string
     ) {
-        this.logger.log(`atualizarCategoria | categoria: ${categoria}`);
-        
+        //this.logger.log(`atualizarCategoria | categoria: ${categoria}`);        
         const categoriaEncontrada = await this.categoriasService.consultarCategoriaPelaDescricao(categoria);
 
         if (!categoriaEncontrada) {
@@ -45,13 +44,13 @@ export class CategoriasController {
 
     @Get('/:categoria/categoria')
     async consultarCategoriaPelaDescricao(@Param('categoria') categoria: string) {        
-        this.logger.log(`consultarCategoriaPelaDescricao | categoria: ${categoria}`);
+        //this.logger.log(`consultarCategoriaPelaDescricao | categoria: ${categoria}`);
         return await this.categoriasService.consultarCategoriaPelaDescricao(categoria);
     }
 
     @Get('/:_id/id')
     async consultarCategoriaPeloId(@Param('_id') _id: string) {        
-        this.logger.log(`consultarCategoriaPeloID | _id: ${_id}`);
+        //this.logger.log(`consultarCategoriaPeloID | _id: ${_id}`);
         return await this.categoriasService.consultarCategoriaPeloId(_id);
     }
 }
